@@ -1,0 +1,10 @@
+# Node modules for frontend
+/frontend/node_modules/
+
+# Vite build output
+/frontend/dist/
+
+# Spring Boot build output
+/backend/target/
+
+/.env
