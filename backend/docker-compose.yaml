@@ -1,0 +1,33 @@
+services:
+  # The PostgreSQL Database service
+  postgres:
+    image: postgres:16
+    container_name: rfp_postgres # Your custom name
+    restart: always
+    environment:
+      POSTGRES_DB: airfp_system # Matches your DB name
+      POSTGRES_USER: airfp_user # Matches your username
+      POSTGRES_PASSWORD: airfp_password # Matches your password
+    ports:
+      - "5432:5432" # Maps the container port to the host machine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Persist data
+
+  # PgAdmin
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: my-pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin # Change this!
+    ports:
+      - "8888:80" # Access at http://localhost:8888
+    depends_on:
+      - postgres # Starts after DB
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  postgres_data:
+  pgadmin_data:
