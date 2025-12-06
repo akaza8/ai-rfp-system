@@ -1,24 +1,14 @@
 package com.ak.rfp.dto;
-
-import jakarta.validation.constraints.*;
-
 import java.util.List;
 
-public class RfpCreateRequest {
+public class AiRfpDto {
 
-    @NotBlank(message = "Title is required")
-    @Size(min = 5, message = "Title must be at least 5 characters")
     private String title;
-    @NotNull(message = "Budget is required")
-    @PositiveOrZero(message = "Budget must be positive or zero")
     private Integer budget;
-    @NotNull(message = "Delivery timeline days is required")
-    @PositiveOrZero(message = "Delivery timeline days must be positive or zero")
     private Integer deliveryTimelineDays;
     private String paymentTerms;
     private String warrantyTerms;
-    private List<RfpItemRequest> items;
-
+    private List<AiRfpItemDto> items;
 
     public String getTitle() {
         return title;
@@ -48,23 +38,29 @@ public class RfpCreateRequest {
         return paymentTerms;
     }
 
+    public void setPaymentTerms(String paymentTerms) {
+        this.paymentTerms = paymentTerms;
+    }
 
     public String getWarrantyTerms() {
         return warrantyTerms;
     }
 
+    public void setWarrantyTerms(String warrantyTerms) {
+        this.warrantyTerms = warrantyTerms;
+    }
 
-    public List<RfpItemRequest> getItems() {
+    public List<AiRfpItemDto> getItems() {
         return items;
     }
 
+    public void setItems(List<AiRfpItemDto> items) {
+        this.items = items;
+    }
 
-    public static class RfpItemRequest {
-        @NotNull(message = "Item type is required")
+    public static class AiRfpItemDto {
         private String itemType;
-        @NotNull(message = "Quantity is required")
         private Integer quantity;
-        @NotNull(message = "Required specs is required")
         private String requiredSpecs;
 
         public String getItemType() {
@@ -92,3 +88,4 @@ public class RfpCreateRequest {
         }
     }
 }
+

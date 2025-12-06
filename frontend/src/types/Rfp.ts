@@ -27,3 +27,7 @@ export interface RfpCreateRequest{
         requiredSpecs: string;
     }[];
 }
+
+export interface RpfFromText{
+    description: string;
+}

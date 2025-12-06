@@ -1,0 +1,16 @@
+{
+  "id": "567cb712-c2cf-49f2-bb61-62a9550fa889",
+  "name": "Globals",
+  "values": [
+    {
+      "key": "base_url",
+      "value": "",
+      "enabled": true,
+      "type": "default",
+      "description": ""
+    }
+  ],
+  "_postman_variable_scope": "globals",
+  "_postman_exported_at": "2025-12-06T06:18:46.790Z",
+  "_postman_exported_using": "Postman/11.0.0"
+}

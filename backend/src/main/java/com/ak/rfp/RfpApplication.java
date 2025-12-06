@@ -9,5 +9,4 @@ public class RfpApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(RfpApplication.class, args);
 	}
-
 }

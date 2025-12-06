@@ -1,0 +1,329 @@
+{
+  "info": {
+    "_postman_id": "d54f4a7d-c099-415d-a225-8015ec491916",
+    "name": "RFP",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "AiRfp",
+      "id": "2828ac50-ff54-4c13-b470-1abf8cdc6705",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "POST",
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"description\":\"s\",\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/rfps/from-text",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "rfps",
+            "from-text"
+          ]
+        }
+      }
+    },
+    {
+      "name": "rfp",
+      "id": "74403d27-74f5-4dd5-89dc-4a3a33c9bd76",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "POST",
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\":\"rtm\",\r\n    \"budget\":19,\r\n    \"deliveryTimelineDays\":3,\r\n    \"paymentTerms\":\"after del\",\r\n    \"warrantyTerms\":\"none\",\r\n    \"items\" : {\r\n        \"itemType\":\"nano\",\r\n        \"quantity\":4,\r\n        \"requiredSpecs\":\"no specs\"\r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/rfps",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "rfps"
+          ]
+        }
+      }
+    },
+    {
+      "name": "rfp",
+      "id": "607480a2-cdaa-403c-8d86-0d4a5568d156",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8080/api/rfps",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "rfps"
+          ]
+        }
+      }
+    },
+    {
+      "name": "rfp",
+      "id": "26825306-57e9-483d-905c-9e561a067930",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "{{base_url}}/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "vendor",
+      "id": "15cea036-3c01-4b7e-8fe6-95cbe1c9f114",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "POST",
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\":\"name\",\r\n    \"email\":\"admin@admin.com\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/vendors",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "vendors"
+          ]
+        }
+      }
+    },
+    {
+      "name": "vendor",
+      "id": "b97208ff-3133-449e-8c12-f113cd589ddd",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "DELETE",
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\":\"name\",\r\n    \"email\":\"admin@admin.com\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/vendors/12",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "vendors",
+            "12"
+          ]
+        }
+      }
+    },
+    {
+      "name": "vendor",
+      "id": "b6fc0dfe-2506-4280-8990-f6c7bcdcb516",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"name111\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/vendors",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "vendors"
+          ]
+        }
+      }
+    },
+    {
+      "name": "vendor",
+      "id": "15264393-2435-4360-a14c-98e7c95fe669",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "PATCH",
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"name111\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/vendors/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "vendors",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "{{base_url}}/from-text",
+      "id": "ecbc08bc-e184-4345-81e8-4ba125d59384",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "POST",
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"description\": \"I need to procure 20 laptops with 16GB RAM and 15 monitors 27-inch. Budget is $50,000 total. Need delivery within 30 days. Payment terms net 30, 1 year warranty.\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/from-text",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "from-text"
+          ]
+        }
+      }
+    },
+    {
+      "name": "rfpVendorMail",
+      "id": "525cb8b1-cb33-412b-9ff8-4f8d445c9d07",
+      "request": {
+        "method": "POST",
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"vendorIds\":[2,4]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/16/send",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "16",
+            "send"
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Request",
+      "id": "44357201-dbcb-4af1-944d-2acc582be2ee",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/rfps/25/send",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "rfps",
+            "25",
+            "send"
+          ]
+        }
+      }
+    }
+  ]
+}
