@@ -36,6 +36,11 @@ public class RfpController {
         return ResponseEntity.ok(rfpResponses);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<RfpResponse> getRfpById(@PathVariable Long id) {
+        RfpResponse rfpResponse = rfpService.getRfpById(id);
+        return ResponseEntity.ok(rfpResponse);
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         rfpService.deleteRfp(id);
