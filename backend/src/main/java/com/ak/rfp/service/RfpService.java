@@ -3,6 +3,7 @@ package com.ak.rfp.service;
 import com.ak.rfp.dto.RfpCreateRequest;
 import com.ak.rfp.dto.RfpFromTextRequest;
 import com.ak.rfp.dto.RfpResponse;
+import com.ak.rfp.dto.VendorInvitationResponse;
 import com.ak.rfp.entity.Rfp;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,5 +19,9 @@ public interface RfpService {
 
     RfpResponse generateRfpFromText(RfpFromTextRequest request);
 
-    void sendRfpToVendors(Long rfpId, List<Long> vendorIds);
+    List<String> sendRfpToVendors(Long rfpId, List<Long> vendorIds);
+
+    RfpResponse getRfpById(Long id);
+
+    List<VendorInvitationResponse> getVendorInvitations(Long id);
 }

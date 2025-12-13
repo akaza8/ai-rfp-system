@@ -1,48 +1,23 @@
-package com.ak.rfp.entity;
+package com.ak.rfp.dto;
 
-import jakarta.persistence.*;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@Entity
-@Table(name = "proposal_score")
-public class ProposalScore {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "proposal_id")
-    private Proposal proposal;
-
-    @Column(name="overall_score")
+@JsonPropertyOrder({"proposalId", "overallScore", "priceScore", "timelineScore", "qualityScore", "explanation"})
+public class ProposalScoreDto {
+    private Long proposalId;
     private Double overallScore;
-
-    @Column(name="price_score")
     private Double priceScore;
-
-    @Column(name="timeline_score")
     private Double timelineScore;
-
-    @Column(name="quality_score")
     private Double qualityScore;
-    @Column(length = 2000)
     private String explanation;
 
-    public Long getId() {
-        return id;
+    public Long getProposalId() {
+        return proposalId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Proposal getProposal() {
-        return proposal;
-    }
-
-    public void setProposal(Proposal proposal) {
-        this.proposal = proposal;
+    public void setProposalId(Long proposalId) {
+        this.proposalId = proposalId;
     }
 
     public Double getOverallScore() {

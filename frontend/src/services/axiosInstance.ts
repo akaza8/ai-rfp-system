@@ -13,3 +13,10 @@ export const vendorInstance = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+export const proposalInstance = axios.create({
+  baseURL: "http://localhost:8080/api/proposals",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});

@@ -1,5 +1,6 @@
 package com.ak.rfp.serviceImplementation;
 
+import com.ak.rfp.dto.ProposalScoreDto;
 import com.ak.rfp.service.AiService;
 import com.ak.rfp.config.PerplexityConfig;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -20,7 +21,7 @@ import java.util.Map;
 
 @Service
 public class AiServiceImplementation implements AiService {
-    private static final Logger logger = LoggerFactory.getLogger(AiService.class);
+    private static final Logger logger = LoggerFactory.getLogger(AiServiceImplementation.class);
     private final PerplexityConfig config;
     private final WebClient webClient;
     private final ObjectMapper objectMapper;
@@ -221,25 +222,21 @@ public class AiServiceImplementation implements AiService {
         logger.info("🔄 Scoring proposals...");
 
         String systemPrompt = """
-            You are a JSON generator. Convert the procurement request to EXACTLY the JSON structure below. 
-            DO NOT add any text, explanation, markdown, or code blocks. 
-            Output ONLY the JSON object—nothing else. If invalid, output {}.
+            You are an expert procurement evaluator. Score the following proposals against the RFP requirements.
             
-            REQUIRED JSON STRUCTURE:
-            {
-              "title": "string - concise title",
-              "budget": number,
-              "deliveryTimelineDays": number,
-              "paymentTerms": "string",
-              "warrantyTerms": "string",
-              "items": [
-                {
-                  "itemType": "string",
-                  "quantity": number,
-                  "requiredSpecs": "string"
-                }
-              ]
-            }
+            Return ONLY valid JSON (no markdown) with this structure:
+            [
+              {
+                "proposalId": number,
+                "overallScore": number (0-10),
+                "priceScore": number (0-10),
+                "timelineScore": number (0-10),
+                "qualityScore": number (0-10),
+                "explanation": "string"
+              }
+            ]
+            
+            Be strict about JSON format. Return ONLY JSON array, nothing else.
             """;
 
         String userPrompt = String.format("""

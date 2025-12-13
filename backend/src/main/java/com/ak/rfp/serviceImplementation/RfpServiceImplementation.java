@@ -2,6 +2,7 @@ package com.ak.rfp.serviceImplementation;
 import com.ak.rfp.dto.RfpCreateRequest;
 import com.ak.rfp.dto.RfpFromTextRequest;
 import com.ak.rfp.dto.RfpResponse;
+import com.ak.rfp.dto.VendorInvitationResponse;
 import com.ak.rfp.entity.*;
 import com.ak.rfp.mapper.RfpMapper;
 import com.ak.rfp.repository.RfpRepository;
@@ -18,21 +19,23 @@ import tools.jackson.databind.ObjectMapper;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 @Service
 public class RfpServiceImplementation implements RfpService {
-    private static final Logger logger = LoggerFactory.getLogger(AiService.class);
+    private static final Logger logger = LoggerFactory.getLogger(RfpServiceImplementation.class);
     private final RfpRepository rfpRepository;
     private final RfpMapper rfpMapper;
     private final ObjectMapper objectMapper;
     private final AiService aiService;
     private final EmailService emailService;
     private final VendorRepository vendorRepository;
+    private final RateLimitedEmailService rateLimitedEmailService;
     private final RfpVendorInvitationRepository invitationRepository;
 
-    public RfpServiceImplementation(RfpRepository rfpRepository, VendorRepository vendorRepository, RfpVendorInvitationRepository invitationRepository, RfpMapper rfpMapper, ObjectMapper objectMapper, AiService aiService, EmailService emailService) {
+    public RfpServiceImplementation(RfpRepository rfpRepository, VendorRepository vendorRepository, RfpVendorInvitationRepository invitationRepository, RfpMapper rfpMapper, ObjectMapper objectMapper, AiService aiService, EmailService emailService, RateLimitedEmailService rateLimitedEmailService) {
         this.rfpRepository = rfpRepository;
         this.vendorRepository = vendorRepository;
         this.invitationRepository = invitationRepository;
@@ -40,6 +43,7 @@ public class RfpServiceImplementation implements RfpService {
         this.objectMapper = objectMapper;
         this.aiService = aiService;
         this.emailService = emailService;
+        this.rateLimitedEmailService = rateLimitedEmailService;
     }
     @Transactional
     @Override
@@ -84,12 +88,10 @@ public class RfpServiceImplementation implements RfpService {
     @Override
     public RfpResponse generateRfpFromText(RfpFromTextRequest request) {
         try {
-            // Check if AI is configured
             if (!aiService.isConfigured()) {
                throw new RuntimeException("AI service not configured. Set PERPLEXITY_API_KEY environment variable.");
             }
 
-            // Call AI to generate structured RFP
             String aiResponse = aiService.generateRfpFromText(request.getDescription());
 
             // Parse JSON response
@@ -105,7 +107,7 @@ public class RfpServiceImplementation implements RfpService {
 
             if (items.isEmpty()) {
                 logger.warn("No items generated—adding default");
-                items = List.of(Map.of("itemType", "Generic Item", "quantity", 1, "requiredSpecs", "Basic"));
+//                items = List.of(Map.of("itemType", "Generic Item", "quantity", 1, "requiredSpecs", "Basic"));
             }
 
             RfpResponse rfp = createRfpAi(rfpData);
@@ -120,7 +122,7 @@ public class RfpServiceImplementation implements RfpService {
 
     @Override
     @Transactional
-    public void sendRfpToVendors(Long rfpId, List<Long> vendorIds) {
+    public List<String> sendRfpToVendors(Long rfpId, List<Long> vendorIds) {
         Rfp rfp = rfpRepository.findById(rfpId)
                 .orElseThrow(() -> new IllegalArgumentException("RFP not found: " + rfpId));
 
@@ -139,39 +141,44 @@ public class RfpServiceImplementation implements RfpService {
         for(int i = 0; i < vendors.size(); i++) {
             Vendor vendor = vendors.get(i);
             try {
-                // Send email
-                emailService.sendRfpToVendor(rfp, vendor);
-
-                // Save invitation record
-                RfpVendorInvitation invitation = new RfpVendorInvitation();
-                invitation.setVendor(vendor);
-                invitation.setRfp(rfp);
-                invitation.setStatus(InvitationStatus.SENT);
-                invitation.setSentAt(sentTime);
-                invitationRepository.save(invitation);
-
-                // Wait between emails (except for last one)
-                if(i < vendors.size() - 1) {
-                    Thread.sleep(5000); // Increased to 3 seconds for Mailtrap
-                }
+                rateLimitedEmailService.sendEmailWithRateLimiter(rfp,vendor);
 
             } catch (Exception e) {
-                // Log the error but continue with other vendors
-                failedVendors.add(vendor.getEmail() + ": " + e.getMessage());
-
-                // Still save the invitation with FAILED status
+                failedVendors.add(vendor.getEmail());
                 RfpVendorInvitation invitation = new RfpVendorInvitation();
                 invitation.setVendor(vendor);
                 invitation.setRfp(rfp);
-                invitation.setStatus(InvitationStatus.FAILED); // Add this status to your enum
+                invitation.setStatus(InvitationStatus.FAILED);
                 invitation.setSentAt(sentTime);
                 invitationRepository.save(invitation);
             }
         }
 
         if(!failedVendors.isEmpty()) {
-            throw new RuntimeException("Failed to send emails to: " + String.join(", ", failedVendors));
+            return failedVendors;
         }
+        return Collections.singletonList("success");
+    }
+
+
+
+    @Override
+    public RfpResponse getRfpById(Long id) {
+        return rfpMapper.toResponse(rfpRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("RFP not found: " + id)));
+    }
+
+    @Override
+    public List<VendorInvitationResponse> getVendorInvitations(Long id) {
+        List<RfpVendorInvitation> invitations = invitationRepository.findByRfpId(id);
+        return invitations.stream().map(invitation -> {
+            VendorInvitationResponse response = new VendorInvitationResponse();
+            response.setId(invitation.getId());
+            response.setVendorId(invitation.getVendor().getId());
+            response.setRfpId(invitation.getRfp().getId());
+            response.setStatus(invitation.getStatus());
+            response.setSentAt(invitation.getSentAt());
+            return response;
+        }).toList();
     }
 
     @Transactional

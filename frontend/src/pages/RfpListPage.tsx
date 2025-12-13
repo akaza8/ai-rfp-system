@@ -169,7 +169,7 @@ const handleDelete = async (rfpId: number) => {
 
       render: (_, record) => (
         <Space size="middle">
-          <Button type="link" onClick={() => handleView(record.id)} icon={<Eye />}></Button>
+          <Button type="link" onClick={() => navigate(`/rfps/${record.id}`)} icon={<Eye />}></Button>
           <Popconfirm
             title="Delete this RFP?"
             description="Are you sure to delete this RFP?"

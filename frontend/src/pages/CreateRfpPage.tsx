@@ -125,17 +125,13 @@ const CreateRfpPage: React.FC = () => {
       onFinish={onFinishManual}
       initialValues={{ items: [{}] }}
       validateTrigger={["onBlur", "onChange"]}
-      onFieldsChange={(changedFields, allFields) => {
-      }}
-      onValuesChange={(changedValues, allValues) => {
-      }}
     >
       <Form.Item
         label="RFP Title"
         name="title"
         rules={[
           { required: true, message: "Please enter a title" },
-          { min: 5, max: 100, message: "Title must be between 2 to 100 characters" },
+          { min: 5, max: 100, message: "Title must be between  to 100 characters" },
         ]}
         hasFeedback
       >
@@ -254,8 +250,7 @@ const CreateRfpPage: React.FC = () => {
       layout="vertical"
       onFinish={onFinishAi}
       validateTrigger={["onBlur", "onChange"]}
-      onFieldsChange={(changedFields, allFields) => {
-      }}
+      
     >
       <div style={{ maxWidth: 700, margin: "0 auto", paddingTop: 20 }}>
         <Alert
@@ -320,7 +315,7 @@ const CreateRfpPage: React.FC = () => {
       <Tabs 
         defaultActiveKey="1" 
         items={tabItems} 
-        destroyInactiveTabPane={true}
+        destroyOnHidden={true}
       />
     </Card>
   );

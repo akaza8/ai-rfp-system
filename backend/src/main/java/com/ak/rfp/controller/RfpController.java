@@ -1,12 +1,11 @@
 package com.ak.rfp.controller;
 
-import com.ak.rfp.dto.RfpCreateRequest;
-import com.ak.rfp.dto.RfpFromTextRequest;
-import com.ak.rfp.dto.RfpResponse;
-import com.ak.rfp.dto.SendRfpRequest;
+import com.ak.rfp.dto.*;
 import com.ak.rfp.service.AiService;
 import com.ak.rfp.service.RfpService;
+import com.ak.rfp.serviceImplementation.ProposalService;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +18,10 @@ import org.slf4j.LoggerFactory;
 public class RfpController {
     private final RfpService rfpService;
     private static final Logger logger = LoggerFactory.getLogger(AiService.class);
-
-    public RfpController(RfpService rfpService) {
+    private final ProposalService proposalService;
+    public RfpController(RfpService rfpService, ProposalService proposalService) {
         this.rfpService = rfpService;
+        this.proposalService = proposalService;
     }
 
     @PostMapping
@@ -62,10 +62,32 @@ public class RfpController {
     }
 
     @PostMapping("/{id}/send")
-    public ResponseEntity<Void> sendRfp(@PathVariable Long id, @RequestBody SendRfpRequest request){
+    public ResponseEntity<List<String>> sendRfp(@PathVariable Long id, @RequestBody SendRfpRequest request){
         System.out.println("Received vendorIds: " + request.getVendorIds());
         System.out.println("Is null? " + (request.getVendorIds() == null));
-        rfpService.sendRfpToVendors(id, request.getVendorIds());
-        return new ResponseEntity<>(HttpStatus.OK);
+        List<String> f = rfpService.sendRfpToVendors(id, request.getVendorIds());
+        return new ResponseEntity<>(f,HttpStatus.OK);
     }
+
+    @GetMapping("/{id}/invitations")
+    public ResponseEntity<List<VendorInvitationResponse>> getVendorInvitations(@PathVariable Long id){
+        List<VendorInvitationResponse> vendorInvitations = rfpService.getVendorInvitations(id);
+        return new ResponseEntity<>(vendorInvitations,HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/score-proposals")
+    public ResponseEntity<List<ProposalScoreDto>> scoreProposals(@PathVariable Long id) {
+        logger.info("🎯 POST /api/rfps/{}/score-proposals - AI scoring", id);
+
+        try {
+            List<ProposalScoreDto> scores = proposalService.scoreProposalsForRfp(id);
+            logger.info("✅ Proposals scored successfully: {} scores", scores.size());
+            return ResponseEntity.ok(scores);
+        } catch (Exception e) {
+            logger.error("❌ Error scoring proposals", e);
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+
 }

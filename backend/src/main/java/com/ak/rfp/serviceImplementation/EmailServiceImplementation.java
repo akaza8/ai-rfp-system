@@ -3,7 +3,6 @@ package com.ak.rfp.serviceImplementation;
 import com.ak.rfp.entity.Rfp;
 import com.ak.rfp.entity.RfpItem;
 import com.ak.rfp.entity.Vendor;
-import com.ak.rfp.service.AiService;
 import com.ak.rfp.service.EmailService;
 import org.springframework.mail.MailAuthenticationException;
 import org.springframework.mail.MailException;
@@ -18,7 +17,7 @@ import java.util.List;
 
 @Service
 public class EmailServiceImplementation implements EmailService {
-    private static final Logger log = LoggerFactory.getLogger(AiService.class);
+    private static final Logger log = LoggerFactory.getLogger(EmailServiceImplementation.class);
     private final JavaMailSender mailSender;
     private final String fromAddress;
 

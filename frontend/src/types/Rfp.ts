@@ -31,3 +31,27 @@ export interface RfpCreateRequest{
 export interface RpfFromText{
     description: string;
 }
+export interface Proposal {
+  totalPrice: number;
+  id: number;
+  vendorId: number;
+  vendorName: string;
+  submittedAt?: string;
+  status?: 'PENDING' | 'REVIEWED' | 'ACCEPTED' | 'REJECTED';
+  notes?: string;
+  attachments?: string[];
+  termsAndConditions?: string;
+  deliveryTimeline?: number;
+}
+
+export interface VendorInvitation {
+  id: number;
+  vendorId: number;
+  rfpId: number;
+  status: 'INVITED' | 'SENT' | 'FAILED' | 'RESPONDED';
+  sentAt: string;
+  createdAt?: string;
+  updatedAt?: string;
+  vendorName?: string;
+  vendorEmail?: string;
+}

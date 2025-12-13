@@ -7,7 +7,7 @@ import java.util.List;
 public class RfpCreateRequest {
 
     @NotBlank(message = "Title is required")
-    @Size(min = 5, message = "Title must be at least 5 characters")
+    @Size(min = 10, message = "Title must be at least 5 characters")
     private String title;
     @NotNull(message = "Budget is required")
     @PositiveOrZero(message = "Budget must be positive or zero")

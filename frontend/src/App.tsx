@@ -3,6 +3,7 @@ import MainLayout from "./components/MainLayout";
 import RfpListPage from "./pages/RfpListPage";
 import CreateRfpPage from "./pages/CreateRfpPage";
 import VendorListPage from "./pages/VendorListPage";
+import RfpDetailsPage from "./pages/RfpDetailsPage";
 
 const App = () => {
   return (
@@ -16,6 +17,8 @@ const App = () => {
           <Route path="create" element={<CreateRfpPage />} />
 
           <Route path="vendors" element={<VendorListPage />} />
+
+          <Route path="rfps/:id" element={<RfpDetailsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

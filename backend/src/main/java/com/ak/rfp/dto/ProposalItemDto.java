@@ -1,32 +1,12 @@
-package com.ak.rfp.entity;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
+package com.ak.rfp.dto;
 
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "proposal_item")
-public class ProposalItem {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ProposalItemDto {
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "proposal_id")
-    @JsonBackReference
-    private Proposal proposal;
-
-    @Column(name="for_rfp_item_id")
     private Long forRfpItemId;
-
-    @Column(name = "quantity")
     private Integer quantity;
-
-    @Column(name="unit_price")
     private BigDecimal unitPrice;
-
-    @Column(name="total_price")
     private BigDecimal totalPrice;
 
     public Long getId() {
@@ -35,14 +15,6 @@ public class ProposalItem {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Proposal getProposal() {
-        return proposal;
-    }
-
-    public void setProposal(Proposal proposal) {
-        this.proposal = proposal;
     }
 
     public Long getForRfpItemId() {

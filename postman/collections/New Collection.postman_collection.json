@@ -13,6 +13,7 @@
       },
       "request": {
         "method": "POST",
+        "header": [],
         "body": {
           "mode": "raw",
           "raw": "{\r\n    \"description\":\"s\",\r\n}",
@@ -35,7 +36,8 @@
             "from-text"
           ]
         }
-      }
+      },
+      "response": []
     },
     {
       "name": "rfp",
@@ -45,6 +47,7 @@
       },
       "request": {
         "method": "POST",
+        "header": [],
         "body": {
           "mode": "raw",
           "raw": "{\r\n    \"title\":\"rtm\",\r\n    \"budget\":19,\r\n    \"deliveryTimelineDays\":3,\r\n    \"paymentTerms\":\"after del\",\r\n    \"warrantyTerms\":\"none\",\r\n    \"items\" : {\r\n        \"itemType\":\"nano\",\r\n        \"quantity\":4,\r\n        \"requiredSpecs\":\"no specs\"\r\n    }\r\n}",
@@ -66,7 +69,8 @@
             "rfps"
           ]
         }
-      }
+      },
+      "response": []
     },
     {
       "name": "rfp",
@@ -76,6 +80,7 @@
       },
       "request": {
         "method": "GET",
+        "header": [],
         "url": {
           "raw": "http://localhost:8080/api/rfps",
           "protocol": "http",
@@ -88,7 +93,8 @@
             "rfps"
           ]
         }
-      }
+      },
+      "response": []
     },
     {
       "name": "rfp",
@@ -98,6 +104,7 @@
       },
       "request": {
         "method": "DELETE",
+        "header": [],
         "url": {
           "raw": "{{base_url}}/1",
           "host": [
@@ -107,7 +114,8 @@
             "1"
           ]
         }
-      }
+      },
+      "response": []
     },
     {
       "name": "vendor",
@@ -117,6 +125,7 @@
       },
       "request": {
         "method": "POST",
+        "header": [],
         "body": {
           "mode": "raw",
           "raw": "{\r\n    \"name\":\"name\",\r\n    \"email\":\"admin@admin.com\"\r\n}",
@@ -138,7 +147,8 @@
             "vendors"
           ]
         }
-      }
+      },
+      "response": []
     },
     {
       "name": "vendor",
@@ -148,6 +158,7 @@
       },
       "request": {
         "method": "DELETE",
+        "header": [],
         "body": {
           "mode": "raw",
           "raw": "{\r\n    \"name\":\"name\",\r\n    \"email\":\"admin@admin.com\"\r\n}",
@@ -170,7 +181,8 @@
             "12"
           ]
         }
-      }
+      },
+      "response": []
     },
     {
       "name": "vendor",
@@ -180,6 +192,7 @@
       },
       "request": {
         "method": "GET",
+        "header": [],
         "body": {
           "mode": "raw",
           "raw": "{\r\n    \"name\": \"name111\"\r\n}",
@@ -201,7 +214,8 @@
             "vendors"
           ]
         }
-      }
+      },
+      "response": []
     },
     {
       "name": "vendor",
@@ -211,6 +225,7 @@
       },
       "request": {
         "method": "PATCH",
+        "header": [],
         "body": {
           "mode": "raw",
           "raw": "{\r\n    \"name\": \"name111\"\r\n}",
@@ -233,7 +248,8 @@
             "1"
           ]
         }
-      }
+      },
+      "response": []
     },
     {
       "name": "{{base_url}}/from-text",
@@ -243,9 +259,10 @@
       },
       "request": {
         "method": "POST",
+        "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"description\": \"I need to procure 20 laptops with 16GB RAM and 15 monitors 27-inch. Budget is $50,000 total. Need delivery within 30 days. Payment terms net 30, 1 year warranty.\"\r\n}",
+          "raw": "{\r\n    \"description\": \"my friend want to buy a saree with beauty essential accessories with the budget of 3000 and timeline is about 30 days \"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -261,16 +278,23 @@
             "from-text"
           ]
         }
-      }
+      },
+      "response": []
     },
     {
       "name": "rfpVendorMail",
       "id": "525cb8b1-cb33-412b-9ff8-4f8d445c9d07",
       "request": {
         "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"vendorIds\":[2,4]\r\n}",
+          "raw": "{\r\n    \"vendorIds\": [\r\n        1,\r\n        4,\r\n        5\r\n    ]\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -278,16 +302,17 @@
           }
         },
         "url": {
-          "raw": "{{base_url}}/16/send",
+          "raw": "{{base_url}}/24/send",
           "host": [
             "{{base_url}}"
           ],
           "path": [
-            "16",
+            "24",
             "send"
           ]
         }
-      }
+      },
+      "response": []
     },
     {
       "name": "New Request",
@@ -310,7 +335,7 @@
           }
         },
         "url": {
-          "raw": "http://localhost:8080/api/rfps/25/send",
+          "raw": "http://localhost:8080/api/rfps/24/send",
           "protocol": "http",
           "host": [
             "localhost"
@@ -319,11 +344,66 @@
           "path": [
             "api",
             "rfps",
-            "25",
+            "24",
             "send"
           ]
         }
-      }
+      },
+      "response": []
+    },
+    {
+      "name": "vendor email ingest",
+      "id": "a644991e-737b-4737-8bb1-b2f426afa4b3",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"rfpId\": 16,\r\n    \"vendorId\": 4,\r\n    \"emailId\": \"msg-12345\",\r\n    \"emailBody\": \"Hi team, we can supply: 20 laptops at $2000 each (total $40,000), 15 monitors at $300 each (total $4,500). Delivery in 25 days. Net 30 terms. 1 year warranty. Total quote: $44,500 USD.\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/proposals/ingest-email",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "proposals",
+            "ingest-email"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "score-proposal",
+      "id": "443987fc-74e7-43c2-befb-fe70312e203e",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/rfps/16/score-proposals",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "rfps",
+            "16",
+            "score-proposals"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }

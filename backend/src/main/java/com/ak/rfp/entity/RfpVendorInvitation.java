@@ -19,6 +19,7 @@ public class RfpVendorInvitation {
 
     @ManyToOne
     @JoinColumn(name = "vendor_id")
+    @JsonBackReference
     private Vendor vendor;
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
