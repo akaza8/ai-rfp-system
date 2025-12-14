@@ -27,8 +27,8 @@ spring:
   mail:
     host: sandbox.smtp.mailtrap.io
     port: 587
-    username: 3484f183fa89d3
-    password: 8ae6c464fc5c60
+    username: yourmailtrap
+    password: yourmailtrap
     properties:
       mail:
         debug: true #remove
