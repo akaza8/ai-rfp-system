@@ -61,6 +61,7 @@ This starts PostgreSQL + PgAdmin used by the backend.
 
 1. Start services:
 ```bash
+cd backend
 docker-compose up -d
 ```
 
