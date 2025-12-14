@@ -1,5 +1,6 @@
 # AI-Powered RFP Management System
 
+## for quick start jump to the summary section for a quick guide.
 An intelligent full-stack platform that automates the creation, distribution, and evaluation of Requests for Proposals (RFPs) using AI (Perplexity Sonar API), Spring Boot, PostgreSQL, and a React + Vite frontend.
 
 Key capabilities:
@@ -217,6 +218,7 @@ Import `postman/rfp.postman_collection.json` into Postman to explore the API, te
 ## Running the entire application (summary)
 1. Start Docker services:
 ```bash
+cd backend
 docker-compose up -d
 ```
 2. Start backend:
@@ -234,6 +236,10 @@ Open:
 - Backend → http://localhost:8080
 - PgAdmin → http://localhost:8888
 
+Open:
+  - application.yaml
+    . set mailtrap username and pass
+    . set perplexity api_key
 ---
 
 ## Deployment notes
@@ -265,8 +271,4 @@ Backend:
 Contributions are welcome. Create issues for bugs or enhancement requests. For larger changes, please open a PR with a clear description and tests where applicable.
 
 ---
-
-## License
-Specify project license here (e.g., MIT). Update this section with the chosen license file.
-
 ---
