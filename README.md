@@ -1,101 +1,112 @@
-AI-Powered RFP Management System
+# AI-Powered RFP Management System
 
-An end-to-end system that automates the creation, distribution, and evaluation of RFPs (Request for Proposals) using AI (Perplexity Sonar API), Spring Boot, PostgreSQL, and a React + TypeScript frontend.
+An intelligent full-stack platform that automates the creation, distribution, and evaluation of **Requests for Proposals (RFPs)** using **AI (Perplexity Sonar API)**, **Spring Boot**, **PostgreSQL**, and a **React + TypeScript** frontend.
 
 This system enables procurement teams to:
 
-Generate structured RFPs from natural-language descriptions
+- Generate structured RFPs from natural-language input  
+- Manage vendors  
+- Send RFP invitations via email  
+- Automatically ingest vendor proposal replies  
+- Use AI to parse unstructured vendor emails into structured proposals  
+- Compare proposals linked to each RFP  
 
-Manage vendors
+A complete Postman collection is available inside:
 
-Invite vendors via email
+postman/rfp.postman_collection.json
 
-Automatically ingest vendor proposal responses
+yaml
+Copy code
 
-Parse proposals into structured pricing using AI
+---
 
-View proposals per RFP for comparison
+# 📁 Project Structure
 
-All APIs are fully documented inside the included Postman collection (postman/rfp.postman_collection.json).
-
-📁 Repository Structure
 ai-rfp-system/
 │
-├── backend/             → Spring Boot backend
-├── frontend/            → React + Vite + TypeScript frontend
-├── postman/             → Postman collection for all backend APIs
-├── .env.example         → Example environment variables
-├── docker-compose.yml   → PostgreSQL + PgAdmin setup
-└── README.md
+├── backend/ → Spring Boot backend
+├── frontend/ → React + Vite + TypeScript frontend
+├── postman/ → Postman collection
+├── docker-compose.yml → PostgreSQL + PgAdmin setup
+├── .env.example → Example environment variables
+└── README.md → Project documentation
 
------------------------------------------
-🖥️ Frontend Setup (React + Vite + TS)
-1. Prerequisites
+yaml
+Copy code
+
+---
+
+# 🖥️ Frontend Setup (React + Vite + TypeScript)
+
+## 1. Prerequisites
 
 Install:
 
-Node.js v18+
+- Node.js v18+
+- npm
 
-npm
+## 2. Install dependencies
 
-2. Install dependencies
+```bash
 cd frontend
 npm install
-
 3. Configuration
+The frontend communicates with the backend at:
 
-The frontend expects the backend to run at:
-
+arduino
+Copy code
 http://localhost:8080
+Backend must allow CORS from:
 
-
-CORS must allow:
-
+arduino
+Copy code
 http://localhost:5173
-
-4. Run the frontend
+4. Run locally
+bash
+Copy code
 npm run dev
+Then open:
 
-
-Visit:
-
+arduino
+Copy code
 http://localhost:5173
-
 5. Build for production
+bash
+Copy code
 npm run build
-
-6. Directory structure
+6. Folder structure
+css
+Copy code
 frontend/src/
-├── components   → Reusable UI elements (MainLayout, etc.)
-├── pages        → Screens (RFP list, create RFP, RFP details)
-├── services     → Backend API wrappers
-└── types        → TypeScript interfaces (match backend DTOs)
-
------------------------------------------
-🛠️ Backend Setup (Spring Boot + PostgreSQL)
+├── components/     → UI components
+├── pages/          → Screens (RFP list, create RFP, details)
+├── services/       → Backend API layer
+└── types/          → TypeScript DTOs
+🛠️ Backend Setup (Spring Boot + PostgreSQL + Flyway)
 1. Requirements
-
 Install:
 
 Java 17+
 
-Maven Wrapper (included)
+Maven (or wrapper included)
 
-PostgreSQL (local or via Docker)
+PostgreSQL or Docker
 
-2. Backend Installation
+2. Install backend
+bash
+Copy code
 cd backend
 ./mvnw clean install
+3. Configure database
+Modify:
 
-3. Database Configuration
-
-Backend uses PostgreSQL. Configure in:
-
+css
+Copy code
 backend/src/main/resources/application.yml
-
-
 Example:
 
+yaml
+Copy code
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/airfp_system
@@ -109,38 +120,34 @@ spring:
 flyway:
   enabled: true
   baseline-on-migrate: true
+4. Flyway Migrations
+Migration files live in:
 
-3.1 Flyway migrations
-
-All DB schema files are located at:
-
+swift
+Copy code
 backend/src/main/resources/db/migration/
+Including:
 
+pgsql
+Copy code
+V1__init.sql
+These run automatically on application startup.
 
-Example:
-
-V1__init.sql  → Creates all tables
-
-4. Run Backend
+5. Run backend
+bash
+Copy code
 ./mvnw spring-boot:run
+Backend runs at:
 
-
-Expected logs:
-
-Flyway migrations completed
-Spring Boot started on port 8080
-
-
-Test:
-
-http://localhost:8080/api/rfps
-
------------------------------------------
+arduino
+Copy code
+http://localhost:8080
 🐳 Docker Setup (PostgreSQL + PgAdmin)
+The project includes a Docker Compose environment for local PostgreSQL.
 
-The project includes a ready-to-run Docker Compose setup.
-
-Create or update docker-compose.yml:
+docker-compose.yml
+yaml
+Copy code
 services:
   postgres:
     image: postgres:16
@@ -172,98 +179,86 @@ services:
 volumes:
   postgres_data:
   pgadmin_data:
-
-Start containers:
+Start environment
+bash
+Copy code
 docker-compose up -d
+Access PgAdmin
+Open:
 
-
-Access PgAdmin:
-
+arduino
+Copy code
 http://localhost:8888
-
-
-Add server:
+Add a server:
 
 Host: postgres
 
-User: airfp_user
+Username: airfp_user
 
 Password: airfp_password
 
------------------------------------------
 🤖 Perplexity AI Integration
+The backend integrates Perplexity Sonar Pro for:
 
-The backend uses Perplexity Sonar Pro for:
-
-Generating RFPs from natural text
+RFP generation from text
 
 Parsing vendor proposal emails
 
-Scoring proposals (optional next step)
+Future scoring workflows
 
-1. Setup in application.yml
+1. Add to application.yml
+yaml
+Copy code
 perplexity:
   api:
     key: ${PERPLEXITY_API_KEY:}
     model: sonar-pro
     base-url: https://api.perplexity.ai
     timeout-seconds: 30
-
 2. Set environment variable
-macOS/Linux
+Mac/Linux
+bash
+Copy code
 export PERPLEXITY_API_KEY="pplx-your-key"
-
 Windows PowerShell
+powershell
+Copy code
 [Environment]::SetEnvironmentVariable("PERPLEXITY_API_KEY", "pplx-your-key", "User")
-
-IntelliJ
-
+IntelliJ IDEA
 Run → Edit Configurations → Environment Variables:
 
+ini
+Copy code
 PERPLEXITY_API_KEY=pplx-your-key
-
------------------------------------------
 📬 Email Sending (Vendor Invitations)
+Configure SMTP:
 
-The backend sends RFP invitations to vendors using SMTP.
-
-Add to application.yml:
-
+yaml
+Copy code
 spring:
   mail:
     host: smtp.mailtrap.io
     port: 587
     username: your-user
     password: your-pass
-    properties:
-      mail.smtp.auth: true
-      mail.smtp.starttls.enable: true
+API:
 
-
-Endpoint:
-
+bash
+Copy code
 POST /api/rfps/{id}/send
+Invitations include subject format:
 
-
-Emails include:
-
-RFP details
-
-Items list
-
-Reply instructions
-
-Special subject format for auto-ingest:
-
+ruby
+Copy code
 RFP #<ID> - <TITLE> [VENDOR:<VENDOR_ID>]
+This allows automatic matching of vendor replies.
 
------------------------------------------
 📥 Automatic Email Ingestion (IMAP)
+The backend supports auto reading vendor replies.
 
-The system can automatically read vendor replies from an inbox.
-
-IMAP config:
-
+IMAP Config
+yaml
+Copy code
 app:
   mail:
     imap:
@@ -272,87 +267,70 @@ app:
       username: rfp.system@example.com
       password: yourpassword
       protocol: imaps
+A scheduled job polls every minute:
 
-
-A scheduled job runs every minute:
-
+java
+Copy code
 @Scheduled(cron = "0 */1 * * * *")
-public void pollInbox()
+public void pollInbox() { ... }
+Emails are parsed by AI into structured proposals.
 
-
-Steps:
-
-Read unread emails
-
-Extract RFP ID + Vendor ID from subject
-
-Extract body text
-
-Pass to AI: parse pricing, terms, items
-
-Store as Proposal + ProposalItem
-
------------------------------------------
 📡 API Overview
-Action	Method	Endpoint
+Feature	Method	Endpoint
 Create RFP	POST	/api/rfps
-Generate RFP from text	POST	/api/rfps/from-text
-Get RFP list	GET	/api/rfps
+Generate RFP from natural text	POST	/api/rfps/from-text
+List RFPs	GET	/api/rfps
 Get RFP details	GET	/api/rfps/{id}
 Send RFP to vendors	POST	/api/rfps/{id}/send
-Vendor CRUD	/api/vendors	
-Ingest vendor email (manual)	POST	/api/proposals/ingest-email
-List proposals for an RFP	GET	/api/proposals/by-rfp/{rfpId}
-✔ Postman Collection Available
+Vendor CRUD	Various	/api/vendors
+Ingest vendor proposal (manual)	POST	/api/proposals/ingest-email
+List proposals by RFP	GET	/api/proposals/by-rfp/{rfpId}
 
-All endpoints are included in:
+📦 Postman Collection
+Import:
 
+bash
+Copy code
 postman/rfp.postman_collection.json
+Contains all API endpoints organized by feature.
 
-
-Import into Postman to test every API.
-
------------------------------------------
-🔧 Running the Entire System
-1. Start PostgreSQL + PgAdmin via Docker
+🚀 Running the Entire Application
+1. Start Docker Services
+bash
+Copy code
 docker-compose up -d
-
 2. Start Backend
+bash
+Copy code
 cd backend
 ./mvnw spring-boot:run
-
-
-Backend runs at:
-
-http://localhost:8080
-
 3. Start Frontend
+bash
+Copy code
 cd frontend
 npm run dev
+Access the system:
+Frontend → http://localhost:5173
 
+Backend → http://localhost:8080
 
-Frontend runs at:
+PgAdmin → http://localhost:8888
 
-http://localhost:5173
+📦 Deployment Overview
+Frontend Deployment
+Build: npm run build
 
------------------------------------------
-🚀 Deployment Notes
-Frontend
-
-Build with: npm run build
-
-Deploy static files (dist/) to:
-
-Netlify
+Deploy dist/ folder to:
 
 Vercel
 
+Netlify
+
 Cloudflare Pages
 
-S3 + CloudFront
+AWS S3
 
-Backend
-
+Backend Deployment
 Deploy JAR to:
 
 Render
@@ -363,30 +341,27 @@ AWS EC2
 
 DigitalOcean
 
-ENV variables required:
+Required environment variables:
 
+nginx
+Copy code
 PERPLEXITY_API_KEY
 SPRING_DATASOURCE_URL
 SPRING_DATASOURCE_USERNAME
 SPRING_DATASOURCE_PASSWORD
-
------------------------------------------
 ✅ Conclusion
-
-This system provides:
+This project delivers a complete, AI-powered procurement workflow:
 
 AI-generated RFP creation
 
 Vendor management
 
-Email invitations
+Email invitation workflow
 
-Auto-ingestion of responses
+Automatic email ingestion
 
-AI-powered proposal extraction
+AI proposal parsing
 
-Full set of APIs with Postman collection
+Dockerized infrastructure
 
-Dockerized database environment
-
-Clean React frontend UI
+Full Postman API coverage
